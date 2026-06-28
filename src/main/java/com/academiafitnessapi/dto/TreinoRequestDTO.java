@@ -4,7 +4,8 @@ import jakarta.validation.constraints.*;
 
 public class TreinoRequestDTO {
 
-    @NotNull(message = "instrutor não pode ser nulo")
+    @NotNull(message = "InstrutorId é obrigatório")
+    @Positive(message = "InstrutorId deve ser um ID válido (positivo)")
     private Long instrutorId;
     @NotBlank(message = "nome não pode estar em branco")
     private String nome;

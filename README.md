@@ -52,9 +52,13 @@ Para endpoints protegidos, adicione o header: `Authorization: Bearer <token>`
 | Endpoint | Métodos | Entidade |
 |----------|---------|---------|
 | `/api/alunos` | GET / POST / PUT / DELETE | CRUD de Aluno |
+| `/api/contratos` | GET / POST / PUT / DELETE | CRUD de Contrato |
 | `/api/instrutors` | GET / POST / PUT / DELETE | CRUD de Instrutor |
-| `/api/modalidades` | GET / POST / PUT / DELETE | CRUD de Modalidade |
 | `/api/matriculas` | GET / POST / PUT / DELETE | CRUD de Matricula |
+| `/api/modalidades` | GET / POST / PUT / DELETE | CRUD de Modalidade |
+| `/api/planos` | GET / POST / PUT / DELETE | CRUD de Plano |
+| `/api/treinos` | GET / POST / PUT / DELETE | CRUD de Treino |
+| `/api/usuarios` | GET / POST / PUT / DELETE | CRUD de Usuario |
 | `/api/dashboard/resumo` | GET | KPIs e totais |
 
 ## Deploy no Render

@@ -22,8 +22,8 @@ public class MatriculaController {
 
     @Operation(summary = "Listar todos os Matricula")
     @GetMapping
-    public ResponseEntity<org.springframework.data.domain.Page<MatriculaResponseDTO>> listar(@RequestParam(required = false) String aluno, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size, @RequestParam(required = false) Long alunoId, @RequestParam(required = false) Long modalidadeId) {
-        org.springframework.data.domain.Page<MatriculaResponseDTO> resultado = service.listar(aluno, page, size);
+    public ResponseEntity<org.springframework.data.domain.Page<MatriculaResponseDTO>> listar(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size, @RequestParam(required = false) Long alunoId, @RequestParam(required = false) Long modalidadeId) {
+        org.springframework.data.domain.Page<MatriculaResponseDTO> resultado = service.listar(page, size);
         if (alunoId != null) {
             java.util.List<MatriculaResponseDTO> filtrado = resultado.getContent().stream()
                 .filter(item -> alunoId.equals(item.getAlunoId()))

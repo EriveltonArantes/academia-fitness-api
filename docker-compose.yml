@@ -8,7 +8,7 @@ services:
       - DATABASE_URL=jdbc:postgresql://db:5432/academiafitnessapi
       - DATABASE_USERNAME=postgres
       - DATABASE_PASSWORD=postgres
-      - JWT_SECRET=32cdf7a40839459b333033b775e4ba896db0e9d8e6eb854d8571b6d5f096ca70
+      - JWT_SECRET=e6b943cfa9258eae80dbb358a950daf3800f0bdfce5c153f1d97819cd409932d
     depends_on:
       db:
         condition: service_healthy

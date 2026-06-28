@@ -31,12 +31,8 @@ public class MatriculaService {
     private ModalidadeRepository modalidadeRepository;
 
     @Transactional(readOnly = true)
-    public org.springframework.data.domain.Page<MatriculaResponseDTO> listar(String aluno, int page, int size) {
+    public org.springframework.data.domain.Page<MatriculaResponseDTO> listar(int page, int size) {
         org.springframework.data.domain.Pageable pageable = org.springframework.data.domain.PageRequest.of(page, size, org.springframework.data.domain.Sort.by("id").descending());
-        if (aluno != null && !aluno.isBlank()) {
-            return repository.findByAlunoContainingIgnoreCase(aluno, pageable)
-                .map(mapper::toResponseDTO);
-        }
         return repository.findAll(pageable).map(mapper::toResponseDTO);
     }
 

@@ -10,9 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 @Transactional
 public class PlanoService {
@@ -23,10 +20,17 @@ public class PlanoService {
     @Autowired
     private PlanoMapper mapper;
 
-    public List<PlanoResponseDTO> listar() {
-        return repository.findAll().stream().map(mapper::toResponseDTO).collect(Collectors.toList());
+    @Transactional(readOnly = true)
+    public org.springframework.data.domain.Page<PlanoResponseDTO> listar(String nome, int page, int size) {
+        org.springframework.data.domain.Pageable pageable = org.springframework.data.domain.PageRequest.of(page, size, org.springframework.data.domain.Sort.by("id").descending());
+        if (nome != null && !nome.isBlank()) {
+            return repository.findByNomeContainingIgnoreCase(nome, pageable)
+                .map(mapper::toResponseDTO);
+        }
+        return repository.findAll(pageable).map(mapper::toResponseDTO);
     }
 
+    @Transactional(readOnly = true)
     public PlanoResponseDTO buscar(Long id) {
         Plano entity = repository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Plano não encontrado com id: " + id));

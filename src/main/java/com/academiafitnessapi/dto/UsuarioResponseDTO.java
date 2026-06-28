@@ -1,36 +1,19 @@
-package com.academiafitnessapi.model;
+package com.academiafitnessapi.dto;
 
-import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+public class UsuarioResponseDTO {
 
-@Entity
-@Table(name = "usuarios")
-public class Usuario {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @CreationTimestamp
-    @Column(name = "criado_em", updatable = false)
     private java.time.LocalDateTime criadoEm;
-
-    @UpdateTimestamp
-    @Column(name = "atualizado_em")
     private java.time.LocalDateTime atualizadoEm;
-
-    @Column(nullable = false)
     private String username;
-    @Column(nullable = false)
     private String password;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-
     public java.time.LocalDateTime getCriadoEm() { return criadoEm; }
+    public void setCriadoEm(java.time.LocalDateTime v) { this.criadoEm = v; }
     public java.time.LocalDateTime getAtualizadoEm() { return atualizadoEm; }
-
+    public void setAtualizadoEm(java.time.LocalDateTime v) { this.atualizadoEm = v; }
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
     public String getPassword() { return password; }

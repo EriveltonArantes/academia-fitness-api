@@ -8,8 +8,9 @@ public class PlanoRequestDTO {
     private String nome;
     @NotBlank(message = "descricao não pode estar em branco")
     private String descricao;
+    @DecimalMin(value = "0.0", message = "valor não pode ser negativo")
     @NotNull(message = "valor não pode ser nulo")
-    private Double valor;
+    private java.math.BigDecimal valor;
     @NotNull(message = "duracao não pode ser nulo")
     private Integer duracao;
     @NotBlank(message = "tipo pagamento não pode estar em branco")
@@ -19,8 +20,8 @@ public class PlanoRequestDTO {
     public void setNome(String nome) { this.nome = nome; }
     public String getDescricao() { return descricao; }
     public void setDescricao(String descricao) { this.descricao = descricao; }
-    public Double getValor() { return valor; }
-    public void setValor(Double valor) { this.valor = valor; }
+    public java.math.BigDecimal getValor() { return valor; }
+    public void setValor(java.math.BigDecimal valor) { this.valor = valor; }
     public Integer getDuracao() { return duracao; }
     public void setDuracao(Integer duracao) { this.duracao = duracao; }
     public String getTipoPagamento() { return tipoPagamento; }

@@ -1,7 +1,7 @@
 package com.academiafitnessapi;
 
-import com.academiafitnessapi.model.Usuario;
-import com.academiafitnessapi.repository.UsuarioRepository;
+import com.academiafitnessapi.model.UsuarioSistema;
+import com.academiafitnessapi.repository.UsuarioSistemaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class DataInitializer {
 
     @Autowired
-    private UsuarioRepository repository;
+    private UsuarioSistemaRepository repository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -30,7 +30,7 @@ public class DataInitializer {
             boolean adminExiste = repository.findAll().stream()
                 .anyMatch(u -> "ADMIN".equals(u.getRole()));
             if (!adminExiste) {
-                Usuario admin = new Usuario();
+                UsuarioSistema admin = new UsuarioSistema();
                 admin.setUsername(adminUsername);
                 admin.setPassword(passwordEncoder.encode(adminPassword));
                 admin.setRole("ADMIN");
