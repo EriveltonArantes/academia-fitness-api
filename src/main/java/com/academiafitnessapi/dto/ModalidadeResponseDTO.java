@@ -1,14 +1,12 @@
 package com.academiafitnessapi.dto;
 
-public class InstrutorResponseDTO {
+public class ModalidadeResponseDTO {
 
     private Long id;
     private java.time.LocalDateTime criadoEm;
     private java.time.LocalDateTime atualizadoEm;
     private String nome;
-    private String crm;
-    private String especialidade;
-    private String email;
+    private String descricao;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -18,10 +16,6 @@ public class InstrutorResponseDTO {
     public void setAtualizadoEm(java.time.LocalDateTime v) { this.atualizadoEm = v; }
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
-    public String getCrm() { return crm; }
-    public void setCrm(String crm) { this.crm = crm; }
-    public String getEspecialidade() { return especialidade; }
-    public void setEspecialidade(String especialidade) { this.especialidade = especialidade; }
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public String getDescricao() { return descricao; }
+    public void setDescricao(String descricao) { this.descricao = descricao; }
 }

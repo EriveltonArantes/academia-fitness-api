@@ -1,6 +1,8 @@
 package com.academiafitnessapi.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "alunos")
@@ -10,17 +12,31 @@ public class Aluno {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @CreationTimestamp
+    @Column(name = "criado_em", updatable = false)
+    private java.time.LocalDateTime criadoEm;
+
+    @UpdateTimestamp
+    @Column(name = "atualizado_em")
+    private java.time.LocalDateTime atualizadoEm;
+
+    @Column(nullable = false)
     private String nome;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String cpf;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
+    @Column(nullable = false)
     private String telefone;
     private java.time.LocalDate dataNascimento;
-    private String statusMatricula;
+    @Column(nullable = false)
+    private String plano;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+
+    public java.time.LocalDateTime getCriadoEm() { return criadoEm; }
+    public java.time.LocalDateTime getAtualizadoEm() { return atualizadoEm; }
 
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
@@ -32,6 +48,6 @@ public class Aluno {
     public void setTelefone(String telefone) { this.telefone = telefone; }
     public java.time.LocalDate getDataNascimento() { return dataNascimento; }
     public void setDataNascimento(java.time.LocalDate dataNascimento) { this.dataNascimento = dataNascimento; }
-    public String getStatusMatricula() { return statusMatricula; }
-    public void setStatusMatricula(String statusMatricula) { this.statusMatricula = statusMatricula; }
+    public String getPlano() { return plano; }
+    public void setPlano(String plano) { this.plano = plano; }
 }

@@ -7,16 +7,17 @@ public class AlunoRequestDTO {
     @NotBlank(message = "nome não pode estar em branco")
     private String nome;
     @NotBlank(message = "cpf não pode estar em branco")
+    @Size(min = 11, max = 14, message = "cpf deve ter entre 11 e 14 dígitos")
     private String cpf;
     @NotBlank(message = "email não pode estar em branco")
     @Email(message = "email precisa ser um e-mail válido")
     private String email;
     @NotBlank(message = "telefone não pode estar em branco")
     private String telefone;
-    @NotNull(message = "data nascimento não pode ser nulo")
+
     private java.time.LocalDate dataNascimento;
-    @NotBlank(message = "status matricula não pode estar em branco")
-    private String statusMatricula;
+    @NotBlank(message = "plano não pode estar em branco")
+    private String plano;
 
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
@@ -28,6 +29,6 @@ public class AlunoRequestDTO {
     public void setTelefone(String telefone) { this.telefone = telefone; }
     public java.time.LocalDate getDataNascimento() { return dataNascimento; }
     public void setDataNascimento(java.time.LocalDate dataNascimento) { this.dataNascimento = dataNascimento; }
-    public String getStatusMatricula() { return statusMatricula; }
-    public void setStatusMatricula(String statusMatricula) { this.statusMatricula = statusMatricula; }
+    public String getPlano() { return plano; }
+    public void setPlano(String plano) { this.plano = plano; }
 }

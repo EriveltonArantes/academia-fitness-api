@@ -3,21 +3,13 @@ package com.academiafitnessapi.service;
 import com.academiafitnessapi.dto.InstrutorRequestDTO;
 import com.academiafitnessapi.dto.InstrutorResponseDTO;
 import com.academiafitnessapi.exception.ResourceNotFoundException;
+import com.academiafitnessapi.exception.BusinessException;
 import com.academiafitnessapi.mapper.InstrutorMapper;
 import com.academiafitnessapi.model.Instrutor;
 import com.academiafitnessapi.repository.InstrutorRepository;
-import com.academiafitnessapi.repository.AlunoRepository;
-import com.academiafitnessapi.model.Aluno;
-import com.academiafitnessapi.repository.ContratoRepository;
-import com.academiafitnessapi.model.Contrato;
-import com.academiafitnessapi.repository.PlanoRepository;
-import com.academiafitnessapi.model.Plano;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -29,19 +21,17 @@ public class InstrutorService {
     @Autowired
     private InstrutorMapper mapper;
 
-    @Autowired
-    private AlunoRepository alunosAtivosRepository;
-
-    @Autowired
-    private ContratoRepository contratosVencendoRepository;
-
-    @Autowired
-    private PlanoRepository planosAssociadosRepository;
-
-    public List<InstrutorResponseDTO> listar() {
-        return repository.findAll().stream().map(mapper::toResponseDTO).collect(Collectors.toList());
+    @Transactional(readOnly = true)
+    public org.springframework.data.domain.Page<InstrutorResponseDTO> listar(String nome, int page, int size) {
+        org.springframework.data.domain.Pageable pageable = org.springframework.data.domain.PageRequest.of(page, size, org.springframework.data.domain.Sort.by("id").descending());
+        if (nome != null && !nome.isBlank()) {
+            return repository.findByNomeContainingIgnoreCase(nome, pageable)
+                .map(mapper::toResponseDTO);
+        }
+        return repository.findAll(pageable).map(mapper::toResponseDTO);
     }
 
+    @Transactional(readOnly = true)
     public InstrutorResponseDTO buscar(Long id) {
         Instrutor entity = repository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Instrutor não encontrado com id: " + id));
@@ -49,16 +39,10 @@ public class InstrutorService {
     }
 
     public InstrutorResponseDTO criar(InstrutorRequestDTO dto) {
+        if (repository.existsByEmail(dto.getEmail())) {
+            throw new BusinessException("Email já cadastrado: " + dto.getEmail());
+        }
         Instrutor entity = mapper.toEntity(dto);
-        Aluno alunosAtivos = alunosAtivosRepository.findById(dto.getAlunosAtivosId())
-            .orElseThrow(() -> new ResourceNotFoundException("Aluno não encontrado com id: " + dto.getAlunosAtivosId()));
-        entity.setAlunosAtivos(alunosAtivos);
-        Contrato contratosVencendo = contratosVencendoRepository.findById(dto.getContratosVencendoId())
-            .orElseThrow(() -> new ResourceNotFoundException("Contrato não encontrado com id: " + dto.getContratosVencendoId()));
-        entity.setContratosVencendo(contratosVencendo);
-        Plano planosAssociados = planosAssociadosRepository.findById(dto.getPlanosAssociadosId())
-            .orElseThrow(() -> new ResourceNotFoundException("Plano não encontrado com id: " + dto.getPlanosAssociadosId()));
-        entity.setPlanosAssociados(planosAssociados);
         Instrutor salvo = repository.save(entity);
         return mapper.toResponseDTO(salvo);
     }
@@ -67,17 +51,11 @@ public class InstrutorService {
         if (!repository.existsById(id)) {
             throw new ResourceNotFoundException("Instrutor não encontrado com id: " + id);
         }
+        if (repository.existsByEmailAndIdNot(dto.getEmail(), id)) {
+            throw new BusinessException("Email já cadastrado em outro registro: " + dto.getEmail());
+        }
         Instrutor entity = mapper.toEntity(dto);
         entity.setId(id);
-        Aluno alunosAtivos = alunosAtivosRepository.findById(dto.getAlunosAtivosId())
-            .orElseThrow(() -> new ResourceNotFoundException("Aluno não encontrado com id: " + dto.getAlunosAtivosId()));
-        entity.setAlunosAtivos(alunosAtivos);
-        Contrato contratosVencendo = contratosVencendoRepository.findById(dto.getContratosVencendoId())
-            .orElseThrow(() -> new ResourceNotFoundException("Contrato não encontrado com id: " + dto.getContratosVencendoId()));
-        entity.setContratosVencendo(contratosVencendo);
-        Plano planosAssociados = planosAssociadosRepository.findById(dto.getPlanosAssociadosId())
-            .orElseThrow(() -> new ResourceNotFoundException("Plano não encontrado com id: " + dto.getPlanosAssociadosId()));
-        entity.setPlanosAssociados(planosAssociados);
         Instrutor salvo = repository.save(entity);
         return mapper.toResponseDTO(salvo);
     }

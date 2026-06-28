@@ -5,8 +5,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name = "instrutors")
-public class Instrutor {
+@Table(name = "modalidades")
+public class Modalidade {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,12 +22,8 @@ public class Instrutor {
 
     @Column(nullable = false)
     private String nome;
-    @Column(nullable = false)
-    private String crm;
-    @Column(nullable = false)
-    private String especialidade;
-    @Column(unique = true, nullable = false)
-    private String email;
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String descricao;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -37,10 +33,6 @@ public class Instrutor {
 
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
-    public String getCrm() { return crm; }
-    public void setCrm(String crm) { this.crm = crm; }
-    public String getEspecialidade() { return especialidade; }
-    public void setEspecialidade(String especialidade) { this.especialidade = especialidade; }
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public String getDescricao() { return descricao; }
+    public void setDescricao(String descricao) { this.descricao = descricao; }
 }
